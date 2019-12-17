@@ -34,8 +34,10 @@ class KaijuContainer extends React.Component {
 
   updateKaiju = (edits, id) => {
     requests.editKaiju(edits, id)
-      .then(kaiju => Object.assign([], [...this.state.kaijus], {[id - 1]: kaiju}))
-      .then(updatedArr => this.setState({ kaijus: updatedArr }))
+    .then(updatedKaiju => {
+      let newKaijuArray = this.state.kaijus.map(kaiju => kaiju.id === id ? updatedKaiju : kaiju)
+      this.setState({ kaijus: newKaijuArray})
+    })
   }
 
   deleteKaiju = (id) => {
@@ -43,7 +45,6 @@ class KaijuContainer extends React.Component {
       .then(kaiju => [...this.state.kaijus].filter(kaiju => kaiju.id !== id))
       .then(updatedArr => this.setState({ kaijus: updatedArr }))
   }
-
 
   render() {
     return (

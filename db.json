@@ -9,7 +9,7 @@
     {
       "id": 2,
       "name": "TSARYDACTLY",
-      "power": "IN THE AIR ",
+      "power": "x",
       "image": "https://images-na.ssl-images-amazon.com/images/I/61Jp8FUo27L._SX466_.jpg"
     },
     {
@@ -23,12 +23,6 @@
       "name": "Gidorah",
       "power": "Lightning breath",
       "image": "https://i.ebayimg.com/images/g/kskAAOSwp2VdldA4/s-l640.jpg"
-    },
-    {
-      "name": "ROBOT",
-      "power": "ROBOTING",
-      "img_url": "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e8ca5e17211157.562d18454cf2b.jpg",
-      "id": 5
     }
   ],
   "sightings": [
