@@ -11,18 +11,52 @@ import * as requests from './requests'
 class KaijuContainer extends React.Component {
 
   state = {
-    kaijus: []
+    kaijus: [],
+    formStatus: false
   }
+
+  componentDidMount() {
+    requests.fetchKaijus()
+      .then(kaijus => this.setState({ kaijus }))
+  }
+
+  handleSubmit = (e, newKaiju) => {
+    e.preventDefault();
+    requests.postKaiju(newKaiju)
+      .then(kaiju => this.setState({ kaijus: [...this.state.kaijus, kaiju] }))
+  }
+
+  formToggle = () => {
+    this.setState({
+      formStatus: !this.state.formStatus
+    })
+  }
+
+  updateKaiju = (edits, id) => {
+    requests.editKaiju(edits, id)
+      .then(kaiju => Object.assign([], [...this.state.kaijus], {[id - 1]: kaiju}))
+      .then(updatedArr => this.setState({ kaijus: updatedArr }))
+  }
+
+  deleteKaiju = (id) => {
+    requests.deleteKaiju(id)
+      .then(kaiju => [...this.state.kaijus].filter(kaiju => kaiju.id !== id))
+      .then(updatedArr => this.setState({ kaijus: updatedArr }))
+  }
+
 
   render() {
     return (
+      
       <>
+        <button onClick={this.formToggle}>{this.state.formStatus ? "Close Form" : "Open Form"}</button>    
 
-        <CreateKaijuForm />
+        {this.state.formStatus && <CreateKaijuForm handleSubmit={this.handleSubmit} />}
 
         <div id='kaiju-container'>
 
-          {/* Kaiju cards should go in here! */}
+          {this.state.kaijus.map(kaiju => <KaijuCard key={kaiju.id} {...kaiju} updateKaiju={this.updateKaiju} deleteKaiju={this.deleteKaiju} />)}
+
 
         </div>
 
@@ -38,3 +72,4 @@ class KaijuContainer extends React.Component {
 }
 
 export default KaijuContainer
+
